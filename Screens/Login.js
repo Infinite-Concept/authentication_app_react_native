@@ -5,20 +5,21 @@ import { MaterialIcons,  EvilIcons } from '@expo/vector-icons';
 const Login = () => {
   return (
     <View style={{flex: 1, backgroundColor: '#ffffff'}}>
-        <Text style={{textAlign: 'left', color: "#000000", fontFamily: "Inter-SemiBold"}}>Login Account</Text>
-        <Text>Hello, welcome back to our account</Text>
+        <View style={{paddingTop: 40, paddingHorizontal: 30}}>
+        <Text style={[styles.text, styles.color, {fontSize: 20, marginBottom: 3} ]}>Login Account</Text>
+        <Text style={[styles.text, styles.color1, {fontSize: 14, marginBottom: 50}]}>Hello, welcome back to our account</Text>
 
-      <View>
+      <View style={{borderRadius: 20, backgroundColor: "#EDEDED", flexDirection: "row", paddingHorizontal: 40, paddingVertical: 20, justifyContent: "space-between", marginBottom: 50 }}>
         <Text>Phone Number</Text>
         <Text>Email</Text>
       </View>
 
-      {/* <View>
-        <View style={styles.inputContainer}>
+      <View>
+        <View style={[styles.form_control]}>
             
-            <MaterialIcons name="alternate-email" size={24} color="black" />
+            <MaterialIcons name="alternate-email" size={25} color="black" />
             <TextInput
-            style={styles.input}
+            style={[styles.input]}
             placeholder="Email"
             placeholderTextColor="#aaa"
             // onChangeText={setEmail}
@@ -26,12 +27,12 @@ const Login = () => {
             />
         </View>
 
-        <View style={styles.inputContainer}>
-            <EvilIcons name="lock" size={24} color="black" />Z
+        <View style={[styles.form_control]} >
+            <EvilIcons name="lock" size={30} color="black" />
             <TextInput
-            style={styles.input}
+            style={[styles.input]}
             placeholder="Password"
-            placeholderTextColor="#aaa"
+            placeholderTextColor="#595959"
             secureTextEntry={true}
             // onChangeText={setPassword}
             // value={password}
@@ -40,11 +41,35 @@ const Login = () => {
         <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-      </View> */}
+      </View>
+        </View>
     </View>
   )
 }
 
 export default Login
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  text: {
+    fontFamily: "Inter-SemiBold",
+    textAlign: 'left'
+  },
+  color: {
+    color: "#000000"
+  },
+  color1: {
+    color: "#595959"
+  },
+  form_control: {
+    flexDirection: "row",
+    borderBottomColor: "#979797", 
+    borderBottomWidth: 1, 
+    gap: 20, 
+    paddingBottom: 7,
+    marginTop: 35,
+  },
+  input: {
+    fontFamily: "Inter-SemiBold",
+    fontSize: 16
+  }
+})

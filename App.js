@@ -1,21 +1,36 @@
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Load from './Screens/Load';
 import Log from './Screens/Log';
 import Login from './Screens/Login';
-import {Loadfont} from './Components/Loadfont';
 
+
+import useFonts from './hooks/useFonts';
 
 
 const Stack = createStackNavigator();
 
 const App = () => {
 
-  useEffect(() => {
-    Loadfont();
-  }, []);
+  const [IsReady, SetIsReady] = useState(false);
+
+  const LoadFonts = async () => {
+    await useFonts();
+  };
+
+  if (!IsReady) {
+    return (
+      <AppLoading
+        startAsync={LoadFonts}
+        onFinish={() => SetIsReady(true)}
+        onError={() => {}}
+      />
+    );
+  }
 
   return (
     <NavigationContainer >
