@@ -141,7 +141,7 @@ const renderDotIndicators = () => {
             <Text style={[styles.button_text, {color: "#000000"}]}>Login</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.button, styles.button2]}>
+          <TouchableOpacity style={[styles.button, styles.button2]} onPress={() => navigation.replace('RegisterScreen') }>
             <Text style={[styles.button_text, {color: "#ffffff"}]}>Create an account</Text>
           </TouchableOpacity>
         </LinearGradient>

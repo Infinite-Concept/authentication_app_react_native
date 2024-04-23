@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { MaterialIcons,  EvilIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -6,44 +6,51 @@ import { useNavigation } from '@react-navigation/native';
 
 import SvgComponent from '../Components/Images/GoogleIcon';
 
-const Login = () => {
+const Register = () => {
 
   const navigation = useNavigation();
-  
-  const[showEmail, setShowEmail] = useState(true)
-  const[showPass, setShowPass] = useState(false)
-
-  const handleButton1Click = () => {
-    setShowEmail(true);
-    setShowPass(false);
-  };
-
-  const handleButton2Click = () => {
-    setShowEmail(false);
-    setShowPass(true);
-  };
 
   return (
-    <View style={{flex: 1, backgroundColor: '#ffffff'}}>
+    <ScrollView style={{flex: 1, backgroundColor: '#ffffff'}}>
       <View style={{paddingTop: 40, paddingHorizontal: 30}}>
-        <Text style={[styles.text, styles.color, {fontSize: 20, marginBottom: 3} ]}>Login Account</Text>
-        <Text style={[styles.text, styles.color1, {fontSize: 14, marginBottom: 50}]}>Hello, welcome back to our account</Text>
+        <Text style={[styles.text, styles.color, {fontSize: 20, marginBottom: 3} ]}>Create Account</Text>
+        <Text style={[styles.text, styles.color1, {fontSize: 14, marginBottom: 30}]}>Hello, welcome to our account</Text>
 
-        <View style={{borderRadius: 20, backgroundColor: "#EDEDED", flexDirection: "row", paddingHorizontal: 7, justifyContent: "space-between", marginBottom: 50, alignItems: "center", paddingVertical: 7, paddingLeft: 30 }}>
-          
-          <TouchableOpacity onPress={handleButton2Click}>
-            <Text style={styles.toggleText}>Phone Number</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.toggle} onPress={handleButton1Click}>
-            <Text style={styles.toggleText}>Email</Text>
-          </TouchableOpacity>
-        </View>
-
-        {showEmail && (
         <View>
+        <View style={[styles.form_control]}>
+            <MaterialIcons name="alternate-email" size={25} color="black" />
+            <TextInput
+            style={[styles.input]}
+            placeholder="First name"
+            placeholderTextColor="#aaa"
+            // onChangeText={setEmail}
+            // value={email}
+            />
+          </View>
+
           <View style={[styles.form_control]}>
-            
+            <MaterialIcons name="alternate-email" size={25} color="black" />
+            <TextInput
+            style={[styles.input]}
+            placeholder="Last name"
+            placeholderTextColor="#aaa"
+            // onChangeText={setEmail}
+            // value={email}
+            />
+          </View>
+
+          <View style={[styles.form_control]}>
+            <MaterialIcons name="alternate-email" size={25} color="black" />
+            <TextInput
+            style={[styles.input]}
+            placeholder="Phone number"
+            placeholderTextColor="#aaa"
+            // onChangeText={setEmail}
+            // value={email}
+            />
+          </View>
+
+          <View style={[styles.form_control]}>
             <MaterialIcons name="alternate-email" size={25} color="black" />
             <TextInput
             style={[styles.input]}
@@ -58,7 +65,19 @@ const Login = () => {
             <EvilIcons name="lock" size={30} color="black" />
             <TextInput
             style={[styles.input]}
-            placeholder="Password"
+            placeholder="Choose password"
+            placeholderTextColor="#595959"
+            secureTextEntry={true}
+            // onChangeText={setPassword}
+            // value={password}
+            />
+          </View>
+
+          <View style={[styles.form_control]} >
+            <EvilIcons name="lock" size={30} color="black" />
+            <TextInput
+            style={[styles.input]}
+            placeholder="Confirm password"
             placeholderTextColor="#595959"
             secureTextEntry={true}
             // onChangeText={setPassword}
@@ -71,28 +90,7 @@ const Login = () => {
                 <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
           </LinearGradient>
-        </View> )}
-
-        {showPass && (
-        <View>
-          <View style={[styles.form_control]}>
-            
-            <MaterialIcons name="alternate-email" size={25} color="black" />
-            <TextInput
-            style={[styles.input]}
-            placeholder="Phone number"
-            placeholderTextColor="#aaa"
-            // onChangeText={setEmail}
-            // value={email}
-            />
-          </View>
-
-          <LinearGradient colors={['#FF9B63', '#FF621F']} style={styles.button}>
-            <TouchableOpacity >
-                <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-          </LinearGradient>
-        </View> )}
+        </View>
 
         <View style={styles.lineWrapper}>
             <View style={styles.line}></View>
@@ -106,41 +104,22 @@ const Login = () => {
         </View>
 
         <View style={styles.bottomText}>
-          <Text style={styles.bottomText2}>Not Registered yet? </Text>
-          <TouchableOpacity onPress={() => navigation.replace('RegisterScreen') }>
-            <Text style={styles.bottomText1} >Create an Account</Text>
+          <Text style={styles.bottomText2}>Already have an account? </Text>
+          <TouchableOpacity onPress={() => navigation.replace('LoginScreen') }>
+            <Text style={styles.bottomText1} >Login</Text>
           </TouchableOpacity> 
         </View>
         
 
 
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
-export default Login
+export default Register
 
 const styles = StyleSheet.create({
-  toggle: {
-    shadowColor: "#000000a2",
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 5,
-    backgroundColor: "#ffffff",
-    paddingVertical: 10,
-    paddingHorizontal: 50,
-    borderRadius: 14
-  },
-  toggleText:{
-    color: "#000000", 
-    fontFamily: "Inter-SemiBold", 
-    fontSize: 16
-  },
   text: {
     fontFamily: "Inter-SemiBold",
     textAlign: 'left'
@@ -172,7 +151,7 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: "center",
     color: "#ffffff",
-    fontFamily: "Inter-SemiBold"
+    fontFamily: "Inter-SemiBold",
   },
   lineWrapper: {
     flexDirection: "row",
@@ -217,6 +196,7 @@ const styles = StyleSheet.create({
   bottomText: {
     flexDirection: "row",
     marginTop: 40,
+    marginBottom: 50
   },
   bottomText2: {
     fontFamily: "Inter-SemiBold",
