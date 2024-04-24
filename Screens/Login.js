@@ -107,13 +107,11 @@ const Login = () => {
 
         <View style={styles.bottomText}>
           <Text style={styles.bottomText2}>Not Registered yet? </Text>
-          <TouchableOpacity onPress={() => navigation.replace('RegisterScreen') }>
+          <TouchableOpacity onPress={() => navigation.replace('RegisterScreen') } activeOpacity={1}>
             <Text style={styles.bottomText1} >Create an Account</Text>
           </TouchableOpacity> 
         </View>
         
-
-
       </View>
     </View>
   )

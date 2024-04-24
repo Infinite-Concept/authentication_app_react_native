@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-import { MaterialIcons,  EvilIcons } from '@expo/vector-icons';
+import { MaterialIcons,  EvilIcons, Feather, Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
@@ -17,30 +17,32 @@ const Register = () => {
         <Text style={[styles.text, styles.color1, {fontSize: 14, marginBottom: 30}]}>Hello, welcome to our account</Text>
 
         <View>
-        <View style={[styles.form_control]}>
-            <MaterialIcons name="alternate-email" size={25} color="black" />
-            <TextInput
-            style={[styles.input]}
-            placeholder="First name"
-            placeholderTextColor="#aaa"
-            // onChangeText={setEmail}
-            // value={email}
-            />
-          </View>
+            <View style={{flexDirection: "row", gap: 20, width: "100%"}}>
+                <View style={[styles.form_control, {width: "47%"}]}>
+                <Ionicons name="person-outline" size={25} color="black" />
+                    <TextInput
+                    style={[styles.input]}
+                    placeholder="First name"
+                    placeholderTextColor="#aaa"
+                    // onChangeText={setEmail}
+                    // value={email}
+                    />
+                </View>
+
+                <View style={[styles.form_control , {width: "47%"}]}>
+                <Ionicons name="person-outline" size={25} color="black" />
+                    <TextInput
+                    style={[styles.input]}
+                    placeholder="Last name"
+                    placeholderTextColor="#aaa"
+                    // onChangeText={setEmail}
+                    // value={email}
+                />
+                </View>
+            </View>
 
           <View style={[styles.form_control]}>
-            <MaterialIcons name="alternate-email" size={25} color="black" />
-            <TextInput
-            style={[styles.input]}
-            placeholder="Last name"
-            placeholderTextColor="#aaa"
-            // onChangeText={setEmail}
-            // value={email}
-            />
-          </View>
-
-          <View style={[styles.form_control]}>
-            <MaterialIcons name="alternate-email" size={25} color="black" />
+            <Feather name="phone" size={24} color="black" />
             <TextInput
             style={[styles.input]}
             placeholder="Phone number"
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderBottomColor: "#979797", 
     borderBottomWidth: 1, 
-    gap: 20, 
+    gap: 15, 
     paddingBottom: 7,
     marginTop: 35,
   },
