@@ -29,7 +29,7 @@ const Login = () => {
         <Text style={[styles.text, styles.color, {fontSize: 20, marginBottom: 3} ]}>Login Account</Text>
         <Text style={[styles.text, styles.color1, {fontSize: 14, marginBottom: 50}]}>Hello, welcome back to our account</Text>
 
-        <View style={{borderRadius: 20, backgroundColor: "#EDEDED", flexDirection: "row", paddingHorizontal: 7, justifyContent: "space-between", marginBottom: 50, alignItems: "center", paddingVertical: 7, paddingLeft: 30 }}>
+        <View style={{borderRadius: 20, backgroundColor: "#EDEDED", flexDirection: "row", paddingHorizontal: 7, justifyContent: "space-between", marginBottom: 30, alignItems: "center", paddingVertical: 7, paddingLeft: 30 }}>
           
           <TouchableOpacity onPress={handleButton2Click}>
             <Text style={styles.toggleText}>Phone Number</Text>
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1, 
     gap: 20, 
     paddingBottom: 7,
-    marginTop: 35,
+    marginTop: 20,
   },
   input: {
     fontFamily: "Inter-SemiBold",
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   },
   lineWrapper: {
     flexDirection: "row",
-    marginTop: 50,
+    marginTop: 40,
     alignItems: "center",
     justifyContent: "center",
     gap: 15
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 5,
-    marginTop: 40,
+    marginTop: 30,
     gap: 50
   },
   googleText: {

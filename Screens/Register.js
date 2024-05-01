@@ -1,14 +1,56 @@
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { MaterialIcons,  EvilIcons, Feather, Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 import SvgComponent from '../Components/Images/GoogleIcon';
 
 const Register = () => {
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+  const [phone, setphone] = useState("");
+
+
   const navigation = useNavigation();
+
+
+  const handleSubmit = async () => {
+
+    const user = {
+      firstName: firstName,
+      lastName: lastName,
+      phone: phone,
+      email: email,
+      password: password
+    }
+
+    axios.post("http://192.168.8.120:3000/register", user)
+    .then((response) => {
+      console.log(response);
+
+      Alert.alert(
+        "Registration successful",
+        "you have been registered successfully",[
+          {text: 'OK', onPress: () => navigation.replace('LoginScreen')},
+        ]
+      )
+      
+
+    })
+    .catch((err) => {
+      Alert.alert(
+        "Registration failed",
+        "An error occurred during registration"
+      );
+      console.log("error", err);
+    })
+  }
+
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: '#ffffff'}}>
@@ -24,8 +66,8 @@ const Register = () => {
                     style={[styles.input]}
                     placeholder="First name"
                     placeholderTextColor="#aaa"
-                    // onChangeText={setEmail}
-                    // value={email}
+                    onChangeText={setfirstName}
+                    value={firstName}
                     />
                 </View>
 
@@ -35,8 +77,8 @@ const Register = () => {
                     style={[styles.input]}
                     placeholder="Last name"
                     placeholderTextColor="#aaa"
-                    // onChangeText={setEmail}
-                    // value={email}
+                    onChangeText={setlastName}
+                    value={lastName}
                 />
                 </View>
             </View>
@@ -47,8 +89,8 @@ const Register = () => {
             style={[styles.input]}
             placeholder="Phone number"
             placeholderTextColor="#aaa"
-            // onChangeText={setEmail}
-            // value={email}
+            onChangeText={setphone}
+            value={phone}
             />
           </View>
 
@@ -58,8 +100,8 @@ const Register = () => {
             style={[styles.input]}
             placeholder="Email"
             placeholderTextColor="#aaa"
-            // onChangeText={setEmail}
-            // value={email}
+            onChangeText={setEmail}
+            value={email}
             />
           </View>
 
@@ -70,8 +112,8 @@ const Register = () => {
             placeholder="Choose password"
             placeholderTextColor="#595959"
             secureTextEntry={true}
-            // onChangeText={setPassword}
-            // value={password}
+            onChangeText={setPassword}
+            value={password}
             />
           </View>
 
@@ -82,13 +124,11 @@ const Register = () => {
             placeholder="Confirm password"
             placeholderTextColor="#595959"
             secureTextEntry={true}
-            // onChangeText={setPassword}
-            // value={password}
             />
           </View>
 
           <LinearGradient colors={['#FF9B63', '#FF621F']} style={styles.button}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleSubmit}>
                 <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
           </LinearGradient>
