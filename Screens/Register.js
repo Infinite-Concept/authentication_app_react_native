@@ -4,7 +4,7 @@ import { MaterialIcons,  EvilIcons, Feather, Ionicons } from '@expo/vector-icons
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-
+import Input from '../Components/Input';
 import SvgComponent from '../Components/Images/GoogleIcon';
 
 const Register = () => {
@@ -13,42 +13,88 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
-  const [phone, setphone] = useState("");
-
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigation = useNavigation();
+
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
 
 
   const handleSubmit = async () => {
 
-    const user = {
-      firstName: firstName,
-      lastName: lastName,
-      phone: phone,
-      email: email,
-      password: password
+    setErrorMessage('')
+
+    const phoneNumberRegex = /^[0-9]+$/;
+
+    if(firstName == "" && lastName == "" && email == "" && phoneNumber == "" && password == "" && confirmPassword == ""){
+       setErrorMessage("All field are required")
+       return
     }
 
-    axios.post("http://192.168.8.120:3000/register", user)
-    .then((response) => {
-      console.log(response);
+    if (firstName < 3) {
+      setErrorMessage('Invalid first name');
+      return
+    } 
 
-      Alert.alert(
-        "Registration successful",
-        "you have been registered successfully",[
-          {text: 'OK', onPress: () => navigation.replace('LoginScreen')},
-        ]
-      )
-      
+    if (lastName < 3) {
+      setErrorMessage('Invalid last name');
+      return
+    } 
 
-    })
-    .catch((err) => {
-      Alert.alert(
-        "Registration failed",
-        "An error occurred during registration"
-      );
-      console.log("error", err);
-    })
+    if (phoneNumber < 10) {
+      setErrorMessage('Invalid phone number');
+      return
+    } 
+
+    if (!phoneNumberRegex.test(phoneNumber)) {
+      setErrorMessage('Phone number must contain only numbers');
+      return
+    } 
+
+    if(!validateEmail(email)) {
+      setErrorMessage('Invalid email address');
+      return;
+    }
+
+    if(password.length <= 6){
+      setErrorMessage('Password must be at least 6 characters long');
+      return
+    }
+
+    if(password !== confirmPassword) {
+      setErrorMessage('Passwords do not match');
+      return;
+    }
+    
+    try {
+      const response = await axios.post("http://192.168.1.36:3790/createUser", {
+        firstName,
+        lastName,
+        phoneNumber,
+        email,
+        password,
+        confirmPassword
+      }, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      const data = await response.data
+
+      console.log(response, data, "Hello world");
+      Alert.alert()
+    } catch (error) {
+      console.log("error");
+      setErrorMessage('Registration failed. Please try again.');
+    }
+
   }
 
 
@@ -59,77 +105,35 @@ const Register = () => {
         <Text style={[styles.text, styles.color1, {fontSize: 14, marginBottom: 30}]}>Hello, welcome to our account</Text>
 
         <View>
-            <View style={{flexDirection: "row", gap: 20, width: "100%"}}>
-                <View style={[styles.form_control, {width: "47%"}]}>
-                <Ionicons name="person-outline" size={25} color="black" />
-                    <TextInput
-                    style={[styles.input]}
-                    placeholder="First name"
-                    placeholderTextColor="#aaa"
-                    onChangeText={setfirstName}
-                    value={firstName}
-                    />
-                </View>
+          <Input placeholder="Enter first name" onChangeText={setfirstName} value={firstName} keyboardType='default' secureTextEntry={false}  >
+            <Ionicons name="person-outline" size={25} color="black" />
+          </Input>
 
-                <View style={[styles.form_control , {width: "47%"}]}>
-                <Ionicons name="person-outline" size={25} color="black" />
-                    <TextInput
-                    style={[styles.input]}
-                    placeholder="Last name"
-                    placeholderTextColor="#aaa"
-                    onChangeText={setlastName}
-                    value={lastName}
-                />
-                </View>
-            </View>
+          <Input placeholder="Enter last name" onChangeText={setlastName} value={lastName} keyboardType='default' secureTextEntry={false}  >
+            <Ionicons name="person-outline" size={25} color="black" />
+          </Input>
 
-          <View style={[styles.form_control]}>
+          <Input placeholder="Enter phone number" onChangeText={setPhoneNumber} value={phoneNumber} keyboardType='default' secureTextEntry={false}  >
             <Feather name="phone" size={24} color="black" />
-            <TextInput
-            style={[styles.input]}
-            placeholder="Phone number"
-            placeholderTextColor="#aaa"
-            onChangeText={setphone}
-            value={phone}
-            />
-          </View>
+          </Input>
 
-          <View style={[styles.form_control]}>
+          <Input placeholder="Enter email address" onChangeText={setEmail} value={email} keyboardType='email-address' secureTextEntry={false}  >
             <MaterialIcons name="alternate-email" size={25} color="black" />
-            <TextInput
-            style={[styles.input]}
-            placeholder="Email"
-            placeholderTextColor="#aaa"
-            onChangeText={setEmail}
-            value={email}
-            />
-          </View>
+          </Input>
 
-          <View style={[styles.form_control]} >
+          <Input placeholder="Choose password" onChangeText={setPassword} value={password} keyboardType="default" secureTextEntry={true}  >
             <EvilIcons name="lock" size={30} color="black" />
-            <TextInput
-            style={[styles.input]}
-            placeholder="Choose password"
-            placeholderTextColor="#595959"
-            secureTextEntry={true}
-            onChangeText={setPassword}
-            value={password}
-            />
-          </View>
+          </Input>
 
-          <View style={[styles.form_control]} >
+          <Input placeholder="Enter confirm password" onChangeText={setConfirmPassword} value={confirmPassword} keyboardType="default" secureTextEntry={true}  >
             <EvilIcons name="lock" size={30} color="black" />
-            <TextInput
-            style={[styles.input]}
-            placeholder="Confirm password"
-            placeholderTextColor="#595959"
-            secureTextEntry={true}
-            />
-          </View>
+          </Input>
+
+          {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
           <LinearGradient colors={['#FF9B63', '#FF621F']} style={styles.button}>
-            <TouchableOpacity onPress={handleSubmit}>
-                <Text style={styles.buttonText}>Login</Text>
+            <TouchableOpacity onPress={handleSubmit} activeOpacity={0.6}>
+                <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
           </LinearGradient>
         </View>
@@ -172,21 +176,8 @@ const styles = StyleSheet.create({
   color1: {
     color: "#595959"
   },
-  form_control: {
-    flexDirection: "row",
-    borderBottomColor: "#979797", 
-    borderBottomWidth: 1, 
-    gap: 15, 
-    paddingBottom: 7,
-    marginTop: 35,
-  },
-  input: {
-    fontFamily: "Inter-SemiBold",
-    fontSize: 16,
-    color: "#595959"
-  },
   button:{
-    marginTop: 50,
+    marginTop: 30,
     paddingVertical: 17,
     borderRadius: 10
   },
@@ -247,6 +238,11 @@ const styles = StyleSheet.create({
   bottomText1: {
     color: "#FF621F",
     fontFamily: "Inter-SemiBold"
+  }, 
+  error: {
+    color: "red",
+    fontSize: 12,
+    fontFamily: "Poppins-Regular",
+    marginTop: 10
   }
-
 })

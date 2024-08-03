@@ -1,17 +1,26 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Animated, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { MaterialIcons,  EvilIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
 import SvgComponent from '../Components/Images/GoogleIcon';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Login = () => {
 
   const navigation = useNavigation();
-  
+
+  const[email, setEmail] = useState('')
+  const[phoneNumber, setPhoneNumber] = useState('')
+  const[password, setPassword] = useState('')
+
+
   const[showEmail, setShowEmail] = useState(true)
   const[showPass, setShowPass] = useState(false)
+  const[isLoginForm, setLoginForm] = useState(true)
+  const slideAnim = new Animated.Value(0);
+
 
   const handleButton1Click = () => {
     setShowEmail(true);
@@ -25,18 +34,20 @@ const Login = () => {
 
   return (
     <View style={{flex: 1, backgroundColor: '#ffffff'}}>
-      <View style={{paddingTop: 40, paddingHorizontal: 30}}>
+      <ScrollView style={{paddingTop: 40, paddingHorizontal: 30}}>
         <Text style={[styles.text, styles.color, {fontSize: 20, marginBottom: 3} ]}>Login Account</Text>
         <Text style={[styles.text, styles.color1, {fontSize: 14, marginBottom: 50}]}>Hello, welcome back to our account</Text>
 
-        <View style={{borderRadius: 20, backgroundColor: "#EDEDED", flexDirection: "row", paddingHorizontal: 7, justifyContent: "space-between", marginBottom: 30, alignItems: "center", paddingVertical: 7, paddingLeft: 30 }}>
+        <View style={{borderRadius: 20, backgroundColor: "#EDEDED", flexDirection: "row", paddingHorizontal: 7, justifyContent: "space-between", marginBottom: 30, alignItems: "center", paddingVertical: 19, paddingLeft: 30, paddingRight: 60, position: "relative" }}>
+
+          <View style={[styles.animateButton, {right: showEmail ? 10 : null, left: showPass ? 10 : null, paddingHorizontal: showPass ? 75 : 65, }]}></View>
           
           <TouchableOpacity onPress={handleButton2Click}>
-            <Text style={styles.toggleText}>Phone Number</Text>
+            <Text style={[styles.toggleText, {color: showEmail? "#4F4F4F" : "#000000" }]}>Phone Number</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.toggle} onPress={handleButton1Click}>
-            <Text style={styles.toggleText}>Email</Text>
+            <Text style={[styles.toggleText, {color: showPass? "#4F4F4F" : "#000000" }]}>Email</Text>
           </TouchableOpacity>
         </View>
 
@@ -49,8 +60,8 @@ const Login = () => {
             style={[styles.input]}
             placeholder="Email"
             placeholderTextColor="#aaa"
-            // onChangeText={setEmail}
-            // value={email}
+            onChangeText={setEmail}
+            value={email}
             />
           </View>
 
@@ -61,8 +72,8 @@ const Login = () => {
             placeholder="Password"
             placeholderTextColor="#595959"
             secureTextEntry={true}
-            // onChangeText={setPassword}
-            // value={password}
+            onChangeText={setPassword}
+            value={password}
             />
           </View>
 
@@ -82,8 +93,8 @@ const Login = () => {
             style={[styles.input]}
             placeholder="Phone number"
             placeholderTextColor="#aaa"
-            // onChangeText={setEmail}
-            // value={email}
+            onChangeText={setPhoneNumber}
+            value={phoneNumber}
             />
           </View>
 
@@ -112,7 +123,7 @@ const Login = () => {
           </TouchableOpacity> 
         </View>
         
-      </View>
+      </ScrollView>
     </View>
   )
 }
@@ -120,22 +131,8 @@ const Login = () => {
 export default Login
 
 const styles = StyleSheet.create({
-  toggle: {
-    shadowColor: "#000000a2",
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 5,
-    backgroundColor: "#ffffff",
-    paddingVertical: 10,
-    paddingHorizontal: 50,
-    borderRadius: 14
-  },
   toggleText:{
-    color: "#000000", 
+    color: "#4F4F4F", 
     fontFamily: "Inter-SemiBold", 
     fontSize: 16
   },
@@ -160,7 +157,8 @@ const styles = StyleSheet.create({
   input: {
     fontFamily: "Inter-SemiBold",
     fontSize: 16,
-    color: "#595959"
+    color: "#595959",
+    width: "100%"
   },
   button:{
     marginTop: 50,
@@ -223,6 +221,22 @@ const styles = StyleSheet.create({
   bottomText1: {
     color: "#FF621F",
     fontFamily: "Inter-SemiBold"
+  },
+  animateButton: {
+    position: "absolute",
+    shadowColor: "#000000a2",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 5,
+    backgroundColor: "#ffffff",
+    paddingVertical: 24,
+    borderRadius: 14,
+    // left: 10,
+    // right: 10
   }
 
 })

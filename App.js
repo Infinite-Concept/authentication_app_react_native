@@ -11,6 +11,7 @@ import Register from './Screens/Register';
 
 
 import useFonts from './hooks/useFonts';
+import HomeScreen from './Screens/HomeScreen';
 
 
 const Stack = createStackNavigator();
@@ -40,6 +41,7 @@ const App = () => {
         <Stack.Screen name="HomeScreen" component={Log} options={{ headerShown: false }} />
         <Stack.Screen name="LoginScreen" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="RegisterScreen" component={Register} options={{ headerShown: false }} />
+        <Stack.Screen name="MainScreen" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )
